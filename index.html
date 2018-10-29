@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="row">
+            <div data-key="38" class="sound column1">
+              <div class="key">
+                <h3>DRUM &uarr;</h3>
+              </div>
+            </div>
+            <div data-key="39" class="sound column2">
+              <div class="key">
+                <h3>KICK &rarr;</h3>
+              </div>            
+            </div>
+        </div>
+        <div class="row">
+            <div data-key="40" class="sound column3">
+              <div class="key">
+                <h3>CLAP &darr;</h3>
+              </div>              
+            </div>
+            <div data-key="37" class="sound column4">
+              <div class="key">
+                <h3>TING &larr;</h3>
+              </div>          
+            </div>
+        </div>        
+    </div>
+    <div class="info">
+      Please look for the arrows key to play the drum kit.
+      Up, Right, Down and bottom arrow keys represents Drum,
+      Kick,Clap and Ting sound respectively.
+    </div>
+    <p class="footer">
+      By : Sonam Gurung
+    </p>
+
+
+  <audio data-key="38" src="sounds/tom.wav"></audio>
+  <audio data-key="39" src="sounds/kick.wav"></audio>
+  <audio data-key="40" src="sounds/clap.wav"></audio>
+  <audio data-key="37" src="sounds/openhat.wav"></audio>
+
+<script>
+
+function playSound(e){
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  const key = document.querySelector(`.sound[data-key="${e.keyCode}"]`);
+  if(!audio) return; //stop function form running all togetrher;
+  audio.currentTime = 0;
+  audio.play(); 
+  key.classList.add('playing'); 
+}
+
+  function removeTransition(e){
+    if (e.propertyName != 'transform') return;
+    console.log(e.propertyName);
+    this.classList.remove('playing'); 
+  }
+
+const keys = document.querySelectorAll('.sound');
+keys.forEach(banda => banda.addEventListener('transitionend',removeTransition));
+
+window.addEventListener('keydown',playSound);
+
+</script>
+
+
+</body>
+</html>
